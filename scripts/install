@@ -1,0 +1,20 @@
+# Install Begin ----------------------------------------------------------------
+apt-get -y update
+apt-get -y full-upgrade
+apt-get -y remove --purge python3-pandas python3-numpy
+apt-get -y install systemd git nano python3 python-dev python3-venv python3-pip python3-pandas python3-matplotlib libatlas-base-dev libopenjp2-7
+pip3 uninstall pandas numpy
+cp /etc/skel/.bashrc $HOME/.bashrc
+rm -rf $dir/scripts/venv $dir/scripts/$exchange $dir/scripts/pycryptobot
+if [ -f "/etc/systemd/system/$currency*" ]; then
+    service $currency* stop
+    rm /etc/systemd/system/$currency*
+    systemctl daemon-reload
+fi
+python3 -m venv $dir/scripts/venv
+source $dir/scripts/venv/bin/activate
+"source $dir/scripts/venv/bin/activate" >> $HOME/.bashrc
+git clone https://github.com/whittlem/pycryptobot $dir/scripts/pycryptobot
+scripts/venv/bin/python3 -m pip install --upgrade pip
+scripts/venv/bin/python3 -m pip install -r $dir/scripts/pycryptobot/requirements.txt -U
+mkdir $dir/scripts/$exchange $dir/scripts/$exchange/pods $dir/scripts/$exchange/telegram

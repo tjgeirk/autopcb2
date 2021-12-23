@@ -1,0 +1,51 @@
+for coin in "${cryptos[@]}"; do 
+echo \
+ "replicaCount: 1
+kind: pod
+image:
+  repository: ghcr.io/whittlem/pycryptobot/pycryptobot
+  pullPolicy: Always
+  tag: latest
+imagePullSecrets: []
+nameOverride: ''
+fullnameOverride: ''
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ''
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+config: >
+    {
+        \"$exchange\": {
+            \"api_url\": \"$apiUrl\",
+            \"api_key_file\": \"/app/keys/$exchange.key\",
+            \"config\": {
+                \"websocket\": 1,
+                \"live\": 1,
+                \"autorestart\": 1,
+                \"base_currency\": \"$coin\",
+                \"quote_currency\": \"$currency\",
+                \"disabletelegram\": $silenceNotifications,
+                \"enabletelegrambotcontrol\": $telegramControl
+            }
+        },
+        \"telegram\": {
+            \"token\": \"$telegramToken\",
+            \"client_id\": \"$telegramId\",
+            \"user_id\": \"$telegramId\",
+            \"datafolder\": \"$dir/scripts/$exchange/telegram\"
+        }
+    }
+$exchange_key: |
+    $apiKey
+    $apiSecret" > $dir/scripts/pycryptobot/chart/pods/$currency$coin.yaml
+
+    echo "cd $dir/scripts/pycryptobot/chart && helm upgrade -i apcb-$currency$coin -f pods/$currency$coin.yaml" \
+    > $dir/scripts/$exchange/pods/$currency$coin.sh
+done

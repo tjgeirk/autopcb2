@@ -1,0 +1,65 @@
+# Body Begin -------------------------------------------------------------------
+export PATH="$dir/scripts/venv/bin/python3:$PATH"
+echo $apiKey > $dir/scripts/$exchange/$exchange.key
+echo $apiSecret >> $dir/scripts/$exchange/$exchange.key
+for coin in "${cryptos[@]}"; do
+printf \
+"{
+    \"$exchange\": {
+        \"api_url\": \"$apiUrl\",
+        \"api_key_file\": \"$dir/scripts/$exchange/$exchange.key\",
+        \"config\": {
+            \"websocket\": 1,
+            \"live\": 1,
+            \"autorestart\": 1,
+            \"base_currency\": \"$coin\",
+            \"quote_currency\": \"$currency\",
+            \"disabletelegram\": $silenceNotifications,
+            \"enabletelegrambotcontrol\": $telegramControl
+        }
+    },
+    \"telegram\": {
+        \"token\": \"$telegramToken\",
+        \"client_id\": \"$telegramId\",
+        \"user_id\": \"$telegramId\",
+        \"datafolder\": \"$dir/scripts/$exchange/telegram\"
+    }
+}" > $dir/scripts/$exchange/$currency$coin.json
+done
+for coin in "${cryptos[@]}"; do
+echo \
+"[Unit]
+Description=$exchange-$currency$coin
+After=network.target
+
+[Service]
+WorkingDirectory=$dir
+Environment=\"PATH=$dir/scripts/venv/bin/python3:$PATH\"
+ExecStart=$dir/scripts/venv/bin/python3 $dir/scripts/pycryptobot/pycryptobot.py --config $dir/scripts/$exchange/$currency$coin.json --live 1
+Restart=always
+RestartSec=$restartTimer
+RuntimeMaxSec=43200
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/$currency$coin.service
+done
+
+echo "#!/bin/bash" > start.sh
+echo "#!/bin/bash" > stop.sh
+echo "#!/bin/bash" > remove.sh
+
+for coin in "${cryptos[@]}"; do
+    echo "sleep 1 && service $currency$coin start" >> start.sh
+    echo "service $currency$coin stop" >> stop.sh
+done
+
+for coin in "${cryptos[@]}"; do
+    echo "rm -rf /etc/systemd/system/$currency*" >> remove.sh
+done
+clear && echo "Starting in 5 seconds..." && sleep 1
+clear && echo "Starting in 4 seconds..." && sleep 1
+clear && echo "Starting in 3 seconds..." && sleep 1
+clear && echo "Starting in 2 seconds..." && sleep 1
+clear && echo "Starting in 1 second..." && sleep 1
+clear && echo "Starting now..." && sleep 1
+bash start.sh

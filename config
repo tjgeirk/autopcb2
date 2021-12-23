@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+dir="$(pwd)"
+usrnme="$(logname)"
+
+apiKey="<apiKey>"
+apiSecret="<apiSecret>"
+telegramToken="<message @BotFather on telegram>"
+telegramId="<message @MyIDbot on telegram>"
+
+currency="USD"
+exchange="binance"
+apiUrl="https://api.binance.us"
+
+restartTimer=60
+silenceNotifications=0
+telegramControl=1
+
+cryptos=("AAVE" "ADA" "ALGO" "AMP" "ANKR" "ATOM" "BAND" "BAT" "BNB" "COMP" "DASH" "DOGE" "EGLD" "ENJ" "EOS" "FIL" "GRT" "HBAR" "HNT" "IOTA" "LINK" "MANA" "MATIC" "MKR" "NANO" "NEO" "OMG" "ONE" "QTUM" "RVN" "REP" "SOL" "STORJ" "SHIB" "UNI" "VET" "VTHO" "WAVES" "XTZ")

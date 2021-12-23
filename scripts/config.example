@@ -1,0 +1,44 @@
+#!/bin/bash
+# AUTOPCB CONFIGURATION FILE
+#
+# These are generally fine as-is, but may need to be changed in some cases
+dir="$(pwd)"
+usrnme="$(logname)"
+
+# $apiKey and $apiSecret must be replaced with your API keys for the bot to 
+# function. $telegramToken and $telegramId are optional (but recommended).
+# If telegram optins are left unset, you MUST set $silenceNotifications=1 and 
+# $telegramControl=0.
+apiKey="<apiKey>"
+apiSecret="<apiSecret>"
+telegramToken="<message @BotFather on telegram>"
+telegramId="<message @MyIDbot on telegram>"
+
+# Set the exchange and FIAT currency you wish to trade with.
+currency="USD"
+exchange="binance"
+apiUrl="https://api.binance.us"
+
+# Number of seconds to wait before restarting a bot. If you are running 
+# many bots, increase this number to avoid IP bans! Generally, 10 seconds
+# per bot should do fine.
+restartTimer=60
+
+# Values here are BOOLEAN (1 = yes/true, and 0 = no/false)
+silenceNotifications=0
+telegramControl=1
+
+# Full list of configurations to write and start.
+# These can be started and stopped at any time with a 
+# command like: "service USDAAVE start", where "USDAAVE" 
+# is the $currency (USD) followed by the $coin (AAVE).
+# If you are trading Euros for Bitcoin, for example,
+# the command would read: "service EURBTC start"
+cryptos=("AAVE" "ADA" "ALGO" "AMP" "ANKR" "ATOM" "BAND" \
+"BAT" "BCH" "BCHA" "BNB" "BTC" "BUSD" "COMP" "DAI" "DASH" \
+"DOGE" "EGLD" "ENJ" "EOS" "ETC" "ETH" "FIL" "GRT" "HBAR" \
+"HNT" "ICX" "IOTA" "KNC" "KNCL" "LINK" "LTC" "MANA" "MATIC" \
+"MKR" "NANO" "NEO" "OMG" "ONE" "ONT" "OXT" "PAX" "PAXG" \
+"QTUM" "RVN" "REP" "SOL" "STORJ" "SUSHI" "SHIB" "UNI" "USD" \
+"USDC" "USDT" "VET" "VTHO" "WAVES" "XLM" "XRP" "XTZ" "ZEC" \
+"ZEN" "ZIL" "ZRX")
