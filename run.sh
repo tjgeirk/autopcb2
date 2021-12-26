@@ -1,10 +1,15 @@
 #/bin/bash
 #
 set +x
-cat config > "$(pwd)"/scripts/autopcb.sh
-cat "$(pwd)"/scripts/install >> "$(pwd)"/scripts/autopcb.sh
-cat "$(pwd)"/scripts/body >> "$(pwd)"/scripts/autopcb.sh
-bash "$(pwd)"/scripts/autopcb.sh &
+cat $(pwd)/config > $(pwd)/scripts/autopcb.sh
+if [ (cat $(pwd)/.is_apcb_installed)=="true" ]
+    then
+        echo "install detected, skipping reinstallation"
+    else
+        cat $(pwd)/scripts/install >> $(pwd)/scripts/autopcb.sh
+fi
+cat $(pwd)/scripts/body >> $(pwd)/scripts/autopcb.sh
+bash $(pwd)/scripts/autopcb.sh &
 while kill -0 $! 2> /dev/null; do
     echo -ne " / Running                        \r" && sleep .1 
     echo -ne " | rUnning                        \r" && sleep .1 

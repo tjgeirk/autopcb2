@@ -1,6 +1,7 @@
 #/bin/bash
 #
 set +x
+git pull
 cat config > "$(pwd)"/scripts/update.sh
 cat "$(pwd)"/scripts/body >> "$(pwd)"/scripts/update.sh
 bash "$(pwd)"/scripts/update.sh
