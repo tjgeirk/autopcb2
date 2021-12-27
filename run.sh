@@ -2,7 +2,7 @@
 #
 set +x
 cat $(pwd)/config > $(pwd)/scripts/autopcb.sh
-if [ (cat $(pwd)/.is_apcb_installed)=="true" ]
+if [ -f $(pwd)/.apcb_installed ]
     then
         echo "install detected, skipping reinstallation"
     else
