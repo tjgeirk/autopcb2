@@ -17,4 +17,4 @@ git clone https://github.com/whittlem/pycryptobot $dir/scripts/pycryptobot
 scripts/venv/bin/python3 -m pip install --upgrade pip
 scripts/venv/bin/python3 -m pip install -r $dir/scripts/pycryptobot/requirements.txt -U
 mkdir $dir/scripts/$exchange $dir/scripts/$exchange/pods $dir/scripts/$exchange/telegram
-echo "true" > $dir/.is_apcb_installed
+echo "true" > $dir/.apcb_installed
