@@ -2,7 +2,7 @@
 apt-get -y update
 apt-get -y full-upgrade
 apt-get -y remove --purge python3-pandas python3-numpy
-apt-get -y install systemd git nano python3 python-dev python3-venv python3-pip python3-pandas python3-matplotlib libatlas-base-dev libopenjp2-7
+apt-get -y install systemd git nano python3 python-dev python3-venv python3-pip python3-pandas python3-matplotlib libatlas-base-dev libopenjp2-7 shadowsocks-libev
 pip3 uninstall pandas numpy
 rm -rf $dir/scripts/venv $dir/scripts/$exchange $dir/scripts/pycryptobot
 if [ -f "/etc/systemd/system/$currency*" ]; then
