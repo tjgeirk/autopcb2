@@ -19,11 +19,7 @@ dir="$(pwd)"
 usrnme="$(logname)"
 
 # additional configurations can be added here for convenience
-otherFlags="--live 1 --sellatresistance 1 --stats 1"
-
-#wireguardConfig=""
-#echo $wireguardConfig > /etc/wireguard/apcb2.conf
-#wg-quick up apcb2
+otherFlags="--live 1 --sellatresistance 1 --stats 1 --disablebullonly 1"
 
 if [ $silenceNotifications -eq 0 ]; then
         telegramControl=1
