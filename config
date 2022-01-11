@@ -1,31 +1,18 @@
 #!/bin/bash
-#
-apiKey="<apiKey>"
-apiSecret="<apiSecret>"
-telegramToken="<message_@BotFather_on_telegram>"
-telegramId="<message_@MyIDbot_on_telegram>"
 
+#apiKey="<apiKey>"
+#apiSecret="<apiSecret>"
+#telegramToken="<message_@BotFather_on_telegram>"
+#telegramId="<message_@MyIDbot_on_telegram>"
 cryptos=("AAVE" "ADA" "ALGO" "ANKR" "ATOM" "FIL" "GRT" "HBAR" "HNT" "IOTA" "MANA" "MATIC" "MKR" "OMG" "ONE" "QTUM" "UNI" "VET" "VTHO" "WAVES")
-
+otherFlags="--live 1 --sellatresistance 1 --stats 1 --disablebullonly 1"
 restartTimer=60
+    wireguardSwitching=0
+    config=$dir/wg-switching.conf
 silenceNotifications=0
-
-currency="USD"
 exchange="binance"
-apiUrl="https://api.binance.us"
-
+    apiUrl="https://api.binance.us"
+currency="USD"
 # these are generally ok to be left as is, change only if neccesary
 dir="$(pwd)"
 usrnme="$(logname)"
-
-# additional configurations can be added here for convenience
-otherFlags="--live 1 --sellatresistance 1 --stats 1 --disablebullonly 1"
-
-if [ $silenceNotifications -eq 0 ]; then
-        telegramControl=1
-    elif [ $silenceNotifications -eq 1 ]; then
-        telegramControl=0
-    else
-        telegramControl=0
-        silenceNotifications=1
-fi
