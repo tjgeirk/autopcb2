@@ -41,7 +41,6 @@ Environment=\"PATH=$dir/scripts/venv/bin/python3:$PATH\"
 ExecStart=$dir/scripts/venv/bin/python3 $dir/scripts/pycryptobot/pycryptobot.py --config $dir/scripts/$exchange/$currency$coin.json $otherFlags
 Restart=always
 RestartSec=$restartTimer
-RuntimeMaxSec=43200
 
 [Install]
 WantedBy=multi-user.target" \
@@ -52,7 +51,7 @@ echo "#!/bin/bash" > $dir/stop.sh
 echo "#!/bin/bash" > $dir/remove.sh
 for coin in "${cryptos[@]}"
     do
-        echo "sleep .5 && systemctl enable $currency$coin" >> $dir/start.sh
+        echo "service $currency$coin start && systemctl enable $currency$coin" >> $dir/start.sh
         echo "systemctl disable $currency$coin" >> $dir/stop.sh
 done
 for coin in "${cryptos[@]}"
