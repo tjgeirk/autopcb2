@@ -49,7 +49,6 @@ Environment=\"PATH=$dir/scripts/venv/bin/python3:$PATH\"
 ExecStart=$dir/scripts/venv/bin/python3 $dir/scripts/pycryptobot/pycryptobot.py --config $dir/scripts/$exchange/$currency$coin.json $otherFlags
 Restart=always
 RestartSec=$restartTimer
-RuntimeMaxSec=43200
 
 [Install]
 WantedBy=multi-user.target" \
@@ -69,36 +68,6 @@ for coin in "${cryptos[@]}"
         echo "rm -rf /etc/systemd/system/$currency*" >> $dir/remove.sh
 done
 echo "cp /etc/skel/.bashrc $HOME/.bashrc" >> $dir/remove.sh
-if [ $wireguardSwitching -eq 1 ]
-    then
-        if [ -d /etc/wireguard/ ]
-            then
-                echo 'wireguard installation detected'
-            else
-                apt-get -y install wireguard-tools
-        fi
-        cat $dir/wg-switching.conf > /etc/wireguard/apcb2.conf
-        wgsCommand="$(which wg-quick) up /etc/wireguard/apcb2.conf && $(which sleep) 90 && $(which wg-quick) down /etc/wireguard/apcb2.conf && $(which sleep) 90"
-        echo \
-"[Unit]
-Description=$exchange-$currency$coin
-After=network.target
-
-[Service]
-ExecStart=$wgsCommand
-Restart=always
-RestartSec=180
-RuntimeMaxSec=300
-
-[Install]
-WantedBy=multi-user.target" \
-        > /etc/systemd/system/wgSwitching.service
-        echo "systemctl enable wgSwitching" >> $dir/start.sh 
-        echo "systemctl disable wgSwitching" >> $dir/stop.sh
-        echo "systemctl disable wgSwitching" >> $dir/remove.sh
-    else
-        echo "wg switching is off"
-fi
 clear && echo "Starting in 5 seconds..." && sleep 1
 clear && echo "Starting in 4 seconds..." && sleep 1
 clear && echo "Starting in 3 seconds..." && sleep 1
@@ -106,3 +75,6 @@ clear && echo "Starting in 2 seconds..." && sleep 1
 clear && echo "Starting in 1 second..." && sleep 1
 clear && echo "Starting now..." && sleep 1
 bash $dir/start.sh
+if [ $wireguardSwitching -eq 1 ]; then
+    bash $dir/wireguard-switching/wireguard.conf
+fi

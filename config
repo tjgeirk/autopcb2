@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #apiKey="<apiKey>"
 #apiSecret="<apiSecret>"
 #telegramToken="<message_@BotFather_on_telegram>"
@@ -10,15 +9,14 @@ cryptos=("AAVE" "ADA" "ALGO" "ANKR" "ATOM" "FIL" "GRT" "HBAR" "HNT" "IOTA" "MANA
 otherFlags="--live 1 --sellatresistance 1 --stats 1 --disablebullonly 1"
 
 restartTimer=60
-    wireguardSwitching=0
-    config=$dir/wg-switching.conf
 
 silenceNotifications=0
 
 exchange="binance"
-    apiUrl="https://api.binance.us"
-
+apiUrl="https://api.binance.us"
 currency="USD"
+
+wireguardSwitching=0
 
 # these are generally ok to be left as is, change only if neccesary
 dir="$(pwd)"
